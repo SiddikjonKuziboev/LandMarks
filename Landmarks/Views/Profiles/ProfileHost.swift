@@ -18,7 +18,7 @@ struct ProfileHost: View {
             HStack {
                 if editMode?.wrappedValue == .active {
                     Button("Cancel", role: .cancel) {
-                        draftProfile = modelData.profileData
+                        draftProfile = modelData.profile
                         editMode?.animation().wrappedValue = .inactive
                     }
                 }
@@ -27,16 +27,16 @@ struct ProfileHost: View {
             }
             
             if editMode?.wrappedValue == .inactive {
-                ProfileSummary(profile: modelData.profileData)
+                ProfileSummary(profile: modelData.profile)
             } else {
                 ProfileEditor(profile: $draftProfile)
                     .onAppear {
-                        draftProfile = modelData.profileData
+                        draftProfile = modelData.profile
                     }
                 
-                    .onDisappear(perform: {
-                        modelData.profileData = draftProfile
-                    })
+                    .onDisappear {
+                        modelData.profile = draftProfile
+                    }
             }
         }
         .padding()
